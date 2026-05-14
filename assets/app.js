@@ -1,0 +1,189 @@
+const TOOLS = {"length-converter": {"title": "Length Converter", "desc": "Convert meters, kilometers, feet, inches, yards, and miles.", "category": "Everyday", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["m", "Meter"], ["km", "Kilometer"], ["cm", "Centimeter"], ["mm", "Millimeter"], ["in", "Inch"], ["ft", "Foot"], ["yd", "Yard"], ["mi", "Mile"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["ft", "Foot"], ["m", "Meter"], ["km", "Kilometer"], ["in", "Inch"], ["mi", "Mile"]]}], "manual": false}, "weight-converter": {"title": "Weight Converter", "desc": "Convert grams, kilograms, ounces, pounds, and tons.", "category": "Everyday", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["g", "Gram"], ["kg", "Kilogram"], ["oz", "Ounce"], ["lb", "Pound"], ["st", "Stone"], ["t", "Metric ton"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["lb", "Pound"], ["kg", "Kilogram"], ["oz", "Ounce"], ["g", "Gram"], ["t", "Metric ton"]]}], "manual": false}, "temperature-converter": {"title": "Temperature Converter", "desc": "Convert Celsius, Fahrenheit, and Kelvin.", "category": "Everyday", "kind": "temperature", "fields": [{"id": "value", "label": "Temperature", "type": "number", "value": 25}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["c", "Celsius"], ["f", "Fahrenheit"], ["k", "Kelvin"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["f", "Fahrenheit"], ["c", "Celsius"], ["k", "Kelvin"]]}], "manual": false}, "area-converter": {"title": "Area Converter", "desc": "Convert square meters, square feet, acres, hectares, and square miles.", "category": "Everyday", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 100}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["sqm", "Square meter"], ["sqft", "Square foot"], ["acre", "Acre"], ["ha", "Hectare"], ["sqmi", "Square mile"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["sqft", "Square foot"], ["sqm", "Square meter"], ["acre", "Acre"], ["ha", "Hectare"]]}], "manual": false}, "volume-converter": {"title": "Volume Converter", "desc": "Convert liters, milliliters, gallons, quarts, pints, cups, and fluid ounces.", "category": "Everyday", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["l", "Liter"], ["ml", "Milliliter"], ["gal", "US gallon"], ["qt", "US quart"], ["pt", "US pint"], ["cup", "US cup"], ["floz", "US fluid ounce"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["cup", "US cup"], ["l", "Liter"], ["ml", "Milliliter"], ["gal", "US gallon"], ["floz", "US fluid ounce"]]}], "manual": false}, "speed-converter": {"title": "Speed Converter", "desc": "Convert mph, km/h, m/s, ft/s, and knots.", "category": "Everyday", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 60}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["mph", "Miles/hour"], ["kph", "Kilometers/hour"], ["ms", "Meters/second"], ["fts", "Feet/second"], ["knot", "Knot"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["kph", "Kilometers/hour"], ["mph", "Miles/hour"], ["ms", "Meters/second"], ["knot", "Knot"]]}], "manual": false}, "pressure-converter": {"title": "Pressure Converter", "desc": "Convert pascal, kPa, bar, psi, atm, and mmHg.", "category": "Science", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["pa", "Pascal"], ["kpa", "Kilopascal"], ["bar", "Bar"], ["psi", "PSI"], ["atm", "Atmosphere"], ["mmhg", "mmHg"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["psi", "PSI"], ["bar", "Bar"], ["kpa", "Kilopascal"], ["atm", "Atmosphere"]]}], "manual": false}, "data-storage-converter": {"title": "Data Storage Converter", "desc": "Convert bits, bytes, KB, MB, GB, TB, KiB, MiB, and GiB.", "category": "Digital", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["b", "Bit"], ["B", "Byte"], ["KB", "Kilobyte"], ["MB", "Megabyte"], ["GB", "Gigabyte"], ["TB", "Terabyte"], ["KiB", "Kibibyte"], ["MiB", "Mebibyte"], ["GiB", "Gibibyte"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["MB", "Megabyte"], ["GB", "Gigabyte"], ["MiB", "Mebibyte"], ["GiB", "Gibibyte"], ["B", "Byte"]]}], "manual": false}, "cooking-measurement-converter": {"title": "Cooking Measurement Converter", "desc": "Convert teaspoons, tablespoons, cups, milliliters, liters, and fluid ounces.", "category": "Cooking", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 2}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["tsp", "Teaspoon"], ["tbsp", "Tablespoon"], ["cup", "US cup"], ["ml", "Milliliter"], ["l", "Liter"], ["floz", "Fluid ounce"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["ml", "Milliliter"], ["cup", "US cup"], ["tbsp", "Tablespoon"], ["floz", "Fluid ounce"]]}], "manual": false}, "fuel-economy-converter": {"title": "Fuel Economy Converter", "desc": "Convert MPG and liters per 100 km.", "category": "Everyday", "kind": "fuel", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 30}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["mpg", "MPG US"], ["l100", "L/100 km"]]}], "manual": false}, "angle-converter": {"title": "Angle Converter", "desc": "Convert degrees, radians, turns, and gradians.", "category": "Science", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 180}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["deg", "Degree"], ["rad", "Radian"], ["turn", "Turn"], ["grad", "Gradian"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["rad", "Radian"], ["deg", "Degree"], ["turn", "Turn"], ["grad", "Gradian"]]}], "manual": false}, "energy-converter": {"title": "Energy Converter", "desc": "Convert joules, kilojoules, calories, kilocalories, watt-hours, and BTU.", "category": "Science", "kind": "unit", "fields": [{"id": "value", "label": "Value", "type": "number", "value": 1000}, {"id": "from", "label": "From", "type": "select", "value": "", "options": [["j", "Joule"], ["kj", "Kilojoule"], ["cal", "Calorie"], ["kcal", "Kilocalorie"], ["wh", "Watt-hour"], ["btu", "BTU"]]}, {"id": "to", "label": "To", "type": "select", "value": "", "options": [["kcal", "Kilocalorie"], ["kj", "Kilojoule"], ["wh", "Watt-hour"], ["btu", "BTU"]]}], "manual": false}};
+
+const $ = (id) => document.getElementById(id);
+const nf = new Intl.NumberFormat("en-US", {maximumFractionDigits: 6});
+const money = (v) => Number.isFinite(v) ? new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:2}).format(v) : "n/a";
+const num = (v) => Number.isFinite(v) ? nf.format(v) : "n/a";
+const pct = (v) => Number.isFinite(v) ? `${v.toFixed(2)}%` : "n/a";
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const read = (fields) => {
+  const out = {};
+  fields.forEach(f => {
+    const el = $(f.id);
+    if (!el) return;
+    if (f.type === "file") out[f.id] = el.files?.[0] || null;
+    else if (["text","textarea","select","date","datetime-local"].includes(f.type)) out[f.id] = el.value;
+    else out[f.id] = Number(el.value || 0);
+  });
+  return out;
+};
+const field = (f) => {
+  if (f.type === "textarea") return `<div class="field wide"><label for="${f.id}">${f.label}</label><textarea id="${f.id}">${esc(f.value || "")}</textarea></div>`;
+  if (f.type === "select") return `<div class="field"><label for="${f.id}">${f.label}</label><select id="${f.id}">${f.options.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join("")}</select></div>`;
+  if (f.type === "file") return `<div class="field wide"><label for="${f.id}">${f.label}</label><input id="${f.id}" type="file" accept="${esc(f.accept || "")}"></div>`;
+  return `<div class="field"><label for="${f.id}">${f.label}</label><input id="${f.id}" type="${f.type || "number"}" step="any" value="${esc(f.value ?? "")}"></div>`;
+};
+const show = (rows) => { $("results").innerHTML = rows.map(([k,v]) => `<div class="result-card"><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join(""); };
+const copyResults = () => navigator.clipboard?.writeText($("results").innerText);
+
+const factors = {
+  m:1, km:1000, cm:.01, mm:.001, in:.0254, ft:.3048, yd:.9144, mi:1609.344,
+  g:1, kg:1000, oz:28.349523125, lb:453.59237, st:6350.29318, t:1000000,
+  sqm:1, sqft:.09290304, acre:4046.8564224, ha:10000, sqmi:2589988.110336,
+  l:1, ml:.001, gal:3.785411784, qt:.946352946, pt:.473176473, cup:.2365882365, floz:.02957352956, tsp:.00492892159, tbsp:.01478676478,
+  mph:1, kph:.6213711922, ms:2.2369362921, fts:.6818181818, knot:1.150779448,
+  pa:1, kpa:1000, bar:100000, psi:6894.757293, atm:101325, mmhg:133.322368,
+  b:1, B:8, KB:8000, MB:8000000, GB:8000000000, TB:8000000000000, KiB:8192, MiB:8388608, GiB:8589934592,
+  deg:1, rad:180/Math.PI, turn:360, grad:.9,
+  j:1, kj:1000, cal:4.184, kcal:4184, wh:3600, btu:1055.05585
+};
+function unit(v){ const base = v.value * factors[v.from]; const out = base / factors[v.to]; return [["Result", num(out)], ["Formula", `${v.value} ${v.from} = ${num(out)} ${v.to}`]]; }
+function temperature(v){ const c = v.from==="c"?v.value:v.from==="f"?(v.value-32)*5/9:v.value-273.15; const out = v.to==="c"?c:v.to==="f"?c*9/5+32:c+273.15; return [["Result", num(out)],["Celsius",num(c)],["Fahrenheit",num(c*9/5+32)],["Kelvin",num(c+273.15)]]; }
+function fuel(v){ const out = v.from==="mpg" ? 235.214583/v.value : 235.214583/v.value; return [[v.from==="mpg"?"L/100 km":"MPG US", num(out)]]; }
+
+const d = (s) => new Date(s);
+const days = (a,b) => Math.round((d(b)-d(a))/86400000);
+function dateDiff(v){ const total=days(v.start,v.end); return [["Total days",num(total)],["Weeks",num(total/7)],["Approx. months",num(total/30.436875)],["Approx. years",num(total/365.2425)]]; }
+function dateAdd(v){ const x=d(v.start); const n=v.direction==="subtract"?-v.amount:v.amount; if(v.unit==="days")x.setDate(x.getDate()+n); if(v.unit==="weeks")x.setDate(x.getDate()+n*7); if(v.unit==="months")x.setMonth(x.getMonth()+n); if(v.unit==="years")x.setFullYear(x.getFullYear()+n); return [["Result date",x.toISOString().slice(0,10)],["Local date",x.toDateString()]]; }
+function businessDays(v){ let a=d(v.start), b=d(v.end), c=0; if(v.includeEnd==="yes") b.setDate(b.getDate()+1); for(let x=new Date(a); x<b; x.setDate(x.getDate()+1)){ const day=x.getDay(); if(day!==0&&day!==6)c++; } return [["Business days",num(c)],["Calendar days",num(days(v.start,v.end))]]; }
+function age(v){ const a=d(v.birth), b=d(v.asof); let y=b.getFullYear()-a.getFullYear(); const before=b.getMonth()<a.getMonth()||(b.getMonth()===a.getMonth()&&b.getDate()<a.getDate()); if(before)y--; return [["Age years",num(y)],["Total days",num(days(v.birth,v.asof))]]; }
+function countdown(v){ const ms=d(v.target)-new Date(); return [["Days remaining",num(Math.floor(ms/86400000))],["Hours remaining",num(Math.floor(ms/3600000))],["Target",d(v.target).toString()]]; }
+function weekInfo(v){ const x=d(v.date); const start=new Date(x.getFullYear(),0,0); const doy=Math.floor((x-start)/86400000); return [["Day of year",num(doy)],["Quarter",`Q${Math.floor(x.getMonth()/3)+1}`],["Weekday",x.toLocaleDateString("en-US",{weekday:"long"})]]; }
+function tzConvert(v){ const t=d(v.time); const out=new Date(t.getTime()+(v.to-v.from)*3600000); return [["Converted time",out.toString()],["ISO",out.toISOString()]]; }
+function unixTime(v){ const ms=v.mode==="seconds"?v.value*1000:v.value; const x=new Date(ms); return [["Local",x.toString()],["ISO",x.toISOString()],["Unix seconds",String(Math.floor(ms/1000))]]; }
+function isoParse(v){ const x=d(v.value); return [["Local",x.toString()],["UTC",x.toUTCString()],["Unix seconds",String(Math.floor(x.getTime()/1000))]]; }
+function quarter(v){ const x=d(v.date), q=Math.floor(x.getMonth()/3); return [["Quarter",`Q${q+1}`],["Start",new Date(x.getFullYear(),q*3,1).toISOString().slice(0,10)],["End",new Date(x.getFullYear(),q*3+3,0).toISOString().slice(0,10)]]; }
+function leap(v){ const y=v.year; const ok=(y%4===0&&y%100!==0)||y%400===0; return [["Leap year",ok?"Yes":"No"]]; }
+function workingHours(v){ return [["Working hours",num(Number(businessDays({...v, includeEnd:"yes"})[0][1].replace(/,/g,""))*v.hours)]]; }
+
+const hexClean = h => h.replace("#","").trim();
+function hexToRgb(h){ h=hexClean(h); if(h.length===3) h=h.split("").map(c=>c+c).join(""); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+function rgbToHex(r,g,b){ return "#"+[r,g,b].map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,"0")).join(""); }
+function rgbToHsl(r,g,b){ r/=255;g/=255;b/=255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h=0,s,l=(max+min)/2; if(max!==min){ const dd=max-min; s=l>.5?dd/(2-max-min):dd/(max+min); h=max===r?(g-b)/dd+(g<b?6:0):max===g?(b-r)/dd+2:(r-g)/dd+4; h/=6;} return [h*360,s*100,l*100];}
+function hslToRgb(h,s,l){ h/=360;s/=100;l/=100; const hue=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p}; if(s===0){const v=l*255;return [v,v,v]} const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q; return [hue(p,q,h+1/3)*255,hue(p,q,h)*255,hue(p,q,h-1/3)*255];}
+function luminance([r,g,b]){ const a=[r,g,b].map(v=>{v/=255; return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)}); return .2126*a[0]+.7152*a[1]+.0722*a[2];}
+function contrastRatio(a,b){ const l1=luminance(hexToRgb(a)),l2=luminance(hexToRgb(b)); return (Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05); }
+function hexColor(v){ const [r,g,b]=hexToRgb(v.hex); const [h,s,l]=rgbToHsl(r,g,b); return [["RGB",`rgb(${r}, ${g}, ${b})`],["HSL",`hsl(${num(h)}, ${num(s)}%, ${num(l)}%)`]]; }
+function rgbColor(v){ const hex=rgbToHex(v.r,v.g,v.b); const [h,s,l]=rgbToHsl(v.r,v.g,v.b); return [["HEX",hex],["HSL",`hsl(${num(h)}, ${num(s)}%, ${num(l)}%)`]]; }
+function hslColor(v){ const [r,g,b]=hslToRgb(v.h,v.s,v.l); return [["HEX",rgbToHex(r,g,b)],["RGB",`rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`]]; }
+function contrast(v){ const r=contrastRatio(v.fg,v.bg); return [["Contrast ratio",r.toFixed(2)+":1"],["WCAG AA normal",r>=4.5?"Pass":"Fail"],["WCAG AA large",r>=3?"Pass":"Fail"]]; }
+function palette(v){ const [r,g,b]=hexToRgb(v.hex); const [h,s,l]=rgbToHsl(r,g,b); return [["Base",v.hex],["Complement",rgbToHex(...hslToRgb((h+180)%360,s,l))],["Analogous 1",rgbToHex(...hslToRgb((h+30)%360,s,l))],["Analogous 2",rgbToHex(...hslToRgb((h+330)%360,s,l))],["Light tint",rgbToHex(...hslToRgb(h,s,Math.min(95,l+25)))],["Dark shade",rgbToHex(...hslToRgb(h,s,Math.max(10,l-25)))]]; }
+function gradient(v){ return [["CSS",`background: linear-gradient(${v.angle}deg, ${v.from}, ${v.to});`]]; }
+function shadow(v){ return [["CSS",`box-shadow: ${v.x}px ${v.y}px ${v.blur}px ${v.spread}px ${v.color};`]]; }
+function radius(v){ return [["CSS",`border-radius: ${v.tl}px ${v.tr}px ${v.br}px ${v.bl}px;`]]; }
+function opacity(v){ const [r,g,b]=hexToRgb(v.hex); return [["RGBA",`rgba(${r}, ${g}, ${b}, ${(v.opacity/100).toFixed(2)})`]]; }
+function clamp(v){ const slope=(v.max-v.min)/(v.maxvw-v.minvw)*100, base=v.min-slope*v.minvw/100; return [["CSS",`font-size: clamp(${v.min}px, ${base.toFixed(3)}px + ${slope.toFixed(3)}vw, ${v.max}px);`]]; }
+function blend(v){ const a=hexToRgb(v.a),b=hexToRgb(v.b),m=v.mix/100; return [["Blended color",rgbToHex(a[0]*(1-m)+b[0]*m,a[1]*(1-m)+b[1]*m,a[2]*(1-m)+b[2]*m)]]; }
+function filter(v){ return [["CSS",`filter: brightness(${v.brightness}%) contrast(${v.contrast}%) saturate(${v.saturate}%) blur(${v.blur}px);`]]; }
+
+function words(t){ return (t.toLowerCase().match(/\b[\w'-]+\b/g)||[]); }
+function sentences(t){ return t.split(/[.!?]+/).map(x=>x.trim()).filter(Boolean); }
+function syllablesIn(w){ w=w.toLowerCase().replace(/[^a-z]/g,""); if(!w)return 0; const m=w.replace(/e$/,"").match(/[aeiouy]+/g); return Math.max(1,m?m.length:1); }
+function readability(v){ const ws=words(v.text), ss=sentences(v.text), syl=ws.reduce((a,w)=>a+syllablesIn(w),0); const ease=206.835-1.015*(ws.length/(ss.length||1))-84.6*(syl/(ws.length||1)); const grade=.39*(ws.length/(ss.length||1))+11.8*(syl/(ws.length||1))-15.59; return [["Words",num(ws.length)],["Sentences",num(ss.length)],["Flesch reading ease",num(ease)],["Estimated grade",num(grade)]]; }
+function altText(v){ const n=v.text.trim().length; return [["Characters",num(n)],["Status",!n?"Missing":n>150?"Likely too long":"Review manually"],["Tip","Describe purpose, not every visual detail."]]; }
+function headingCheck(v){ const hs=[...v.html.matchAll(/<h([1-6])[^>]*>(.*?)<\/h\1>/gi)].map(m=>[Number(m[1]),m[2].replace(/<[^>]+>/g,"")]); let skipped=[]; for(let i=1;i<hs.length;i++) if(hs[i][0]-hs[i-1][0]>1) skipped.push(`${hs[i-1][1]} -> ${hs[i][1]}`); return [["Headings",hs.map(h=>`H${h[0]} ${h[1]}`).join("\n")||"None"],["Skipped levels",skipped.join("\n")||"None"]];}
+function linkText(v){ const bad=["click here","read more","learn more","more"]; const links=[...v.html.matchAll(/<a[^>]*>(.*?)<\/a>/gi)].map(m=>m[1].replace(/<[^>]+>/g,"").trim().toLowerCase()); return [["Links found",num(links.length)],["Vague links",links.filter(x=>bad.includes(x)).join("\n")||"None"]];}
+function formLabels(v){ const inputs=(v.html.match(/<input\b/gi)||[]).length; const labels=(v.html.match(/<label\b|aria-label=/gi)||[]).length; return [["Inputs",num(inputs)],["Labels or aria-labels",num(labels)],["Status",labels>=inputs?"Looks covered":"Review missing labels"]];}
+function tapTarget(v){ return [["Size",`${v.width} x ${v.height}px`],["44px guidance",v.width>=44&&v.height>=44?"Pass":"Too small"]];}
+function ariaHelper(v){ return [["Example",`<${v.element} aria-label="${esc(v.action)}">...</${v.element}>`]];}
+function focusChecklist(v){ return [["Checklist",v.components.split(/\n+/).filter(Boolean).map((x,i)=>`${i+1}. Tab to ${x}\n   - Visible focus\n   - Logical order\n   - Enter/Space works where expected`).join("\n")]];}
+function colorMeaning(v){ const risky=/\b(red|green|blue|yellow|color|colou?r)\b/i.test(v.text); return [["Color-only risk",risky?"Review required":"No obvious risk"],["Suggestion","Pair color with text, icons, or labels."]];}
+function imageA11y(v){ return [["Checklist",`Purpose: ${v.purpose}\nContext: ${v.context}\n- Decorative images should use empty alt text.\n- Informative images need concise alt text.\n- Functional images need action-focused labels.`]];}
+function keyboardChecklist(v){ return [["Checklist",`Keyboard test for ${v.page}\n- Tab reaches every interactive control.\n- Focus indicator is visible.\n- Escape closes dialogs.\n- Enter/Space activates controls.\n- No keyboard trap.`]];}
+
+function qrPayload(v){ return [["Payload",v.url.trim()],["Length",num(v.url.trim().length)]]; }
+function wifiPayload(v){ const escp=s=>String(s).replace(/[\\;,":]/g,"\\$&"); return [["Payload",`WIFI:T:${v.security};S:${escp(v.ssid)};P:${escp(v.password)};;`]]; }
+function vcardPayload(v){ return [["Payload",`BEGIN:VCARD\nVERSION:3.0\nFN:${v.name}\nORG:${v.org}\nTEL:${v.phone}\nEMAIL:${v.email}\nEND:VCARD`]]; }
+function mailto(v){ return [["Link",`mailto:${encodeURIComponent(v.email)}?subject=${encodeURIComponent(v.subject)}&body=${encodeURIComponent(v.body)}`]]; }
+function sms(v){ return [["Link",`sms:${encodeURIComponent(v.phone)}?body=${encodeURIComponent(v.message)}`]]; }
+function tel(v){ return [["Link",`tel:${v.phone.replace(/\s+/g,"")}`]]; }
+function geo(v){ return [["Geo URI",`geo:${v.lat},${v.lng}?q=${v.lat},${v.lng}(${encodeURIComponent(v.label)})`]]; }
+function ics(v){ const fmt=s=>new Date(s).toISOString().replace(/[-:]/g,"").split(".")[0]+"Z"; return [["ICS",`BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${v.title}\nDTSTART:${fmt(v.start)}\nDTEND:${fmt(v.end)}\nLOCATION:${v.location}\nEND:VEVENT\nEND:VCALENDAR`]];}
+function checkDigit(digs){ const a=digs.replace(/\D/g,"").split("").map(Number); let sum=0; for(let i=0;i<a.length;i++) sum+=a[i]*(i%2===0?1:3); return (10-sum%10)%10; }
+function upc(v){ const d=v.digits.replace(/\D/g,""); const base=d.slice(0,11), cd=checkDigit(base.split("").map((x,i)=>i%2===0?Number(x)*3:Number(x)).reduce((a,b)=>a+b,0).toString()); let sum=0; base.split("").forEach((x,i)=>sum+=Number(x)*(i%2===0?3:1)); const c=(10-sum%10)%10; return [["Check digit",String(c)],["Full UPC-A",base+c],["Valid input",d.length===12 && Number(d[11])===c?"Yes":"n/a"]];}
+function ean(v){ const d=v.digits.replace(/\D/g,""), base=d.slice(0,12); let sum=0; base.split("").forEach((x,i)=>sum+=Number(x)*(i%2===0?1:3)); const c=(10-sum%10)%10; return [["Check digit",String(c)],["Full EAN-13",base+c],["Valid input",d.length===13 && Number(d[12])===c?"Yes":"n/a"]];}
+const isbn13 = v => ean({digits:v.isbn});
+function qrLength(v){ const n=v.text.length; return [["Characters",num(n)],["Risk",n<100?"Low":n<500?"Medium":"High"],["Tip","Shorter QR payloads usually scan more reliably."]];}
+
+function subject(v){ const risk=/free|guaranteed|act now|winner|prize/i.test(v.subject); return [["Characters",num(v.subject.length)],["Preview fit",v.subject.length<=60?"Good":"May truncate"],["Aggressive wording",risk?"Review":"No obvious issue"]];}
+function preheader(v){ return [["Characters",num(v.text.length)],["Status",v.text.length<40?"Short":v.text.length>100?"Long":"Good"]];}
+function emailPreview(v){ return [["Inbox preview",`${v.sender}\n${v.subject}\n${v.preheader}`]];}
+function mailtoFull(v){ const q=new URLSearchParams(); if(v.subject)q.set("subject",v.subject); if(v.body)q.set("body",v.body); if(v.cc)q.set("cc",v.cc); if(v.bcc)q.set("bcc",v.bcc); return [["Mailto link",`mailto:${v.to}?${q.toString()}`]];}
+function htmlPlain(v){ return [["Plain text",v.html.replace(/<br\s*\/?>/gi,"\n").replace(/<\/p>/gi,"\n").replace(/<[^>]+>/g,"").replace(/\n{3,}/g,"\n\n").trim()]];}
+function htmlMin(v){ return [["Minified HTML",v.html.replace(/>\s+</g,"><").replace(/\s{2,}/g," ").trim()],["Bytes",num(new Blob([v.html]).size)]];}
+function unsubscribe(v){ return [["Footer",`${v.company}\n${v.address}\nTo unsubscribe, visit: ${v.url}`]];}
+function utm(v){ const u=new URL(v.url); [["utm_source",v.source],["utm_medium",v.medium],["utm_campaign",v.campaign],["utm_content",v.content]].forEach(([k,val])=>val&&u.searchParams.set(k,val)); return [["Campaign URL",u.toString()]];}
+function spamWords(v){ const list=["free","guaranteed","act now","winner","prize","risk-free","urgent"]; const found=list.filter(w=>v.text.toLowerCase().includes(w)); return [["Flagged words",found.join(", ")||"None"],["Count",num(found.length)]];}
+function ctaCounter(v){ const list=["buy now","learn more","start","sign up","subscribe","download","try"]; const found=list.filter(w=>v.text.toLowerCase().includes(w)); return [["CTA phrases",found.join(", ")||"None"],["Count",num(found.length)]];}
+function lineLength(v){ const lines=v.text.split(/\r?\n/); return [["Longest line",num(Math.max(...lines.map(x=>x.length)))],["Lines over 78 chars",num(lines.filter(x=>x.length>78).length)]];}
+function emailSize(v){ const bytes=new Blob([v.html]).size; return [["Size",`${num(bytes/1024)} KB`],["Gmail clipping risk",bytes>102400?"High":"Low"]];}
+
+function sku(v){ return [["SKU",`${v.brand}-${v.category}-${v.color}-${v.size}-${String(v.number).padStart(4,"0")}`.toUpperCase().replace(/[^A-Z0-9-]/g,"")]];}
+function listingTitle(v){ return [["Characters",num(v.title.length)],["Words",num(words(v.title).length)],["Keyword present",v.title.toLowerCase().includes(v.keyword.toLowerCase())?"Yes":"No"],["Status",v.title.length>140?"Long":"Review platform limit"]];}
+function dimWeight(v){ const dw=v.length*v.width*v.height/v.divisor; return [["Dimensional weight",`${num(dw)} lb`],["Rounded billable",`${Math.ceil(dw)} lb`]];}
+function reorder(v){ return [["Reorder point",num(v.daily*v.lead+v.safety)],["Lead time demand",num(v.daily*v.lead)]];}
+function stockCover(v){ return [["Days of stock",num(v.stock/v.daily)],["Weeks of stock",num(v.stock/v.daily/7)]];}
+function returnRate(v){ return [["Return rate",pct(v.returns/v.orders*100)],["Kept orders",num(v.orders-v.returns)]];}
+function discountMargin(v){ const sale=v.price*(1-v.discount/100), profit=sale-v.cost; return [["Sale price",money(sale)],["Profit",money(profit)],["Margin",pct(profit/sale*100)]];}
+function bundle(v){ const savings=v.items-v.bundle, profit=v.bundle-v.cost; return [["Customer savings",money(savings)],["Bundle margin",pct(profit/v.bundle*100)],["Profit",money(profit)]];}
+function aov(v){ return [["Average order value",money(v.revenue/v.orders)]];}
+function roas(v){ return [["ROAS",`${num(v.revenue/v.ad)}x`],["Break-even ROAS",`${num(1/(v.margin/100))}x`]];}
+function shipUnit(v){ return [["Shipping per unit",money(v.shipping/v.units)]];}
+function tags(v){ const arr=v.tags.split(",").map(x=>x.trim()).filter(Boolean); return [["Tag count",num(arr.length)],["Duplicates",[...new Set(arr.filter((x,i)=>arr.indexOf(x)!==i))].join(", ")||"None"],["Long tags",arr.filter(x=>x.length>20).join(", ")||"None"]];}
+
+function gcd(a,b){ return b?gcd(b,a%b):Math.abs(a); }
+function percentage(v){ return [["Percent",pct(v.part/v.whole*100)],["Part of 100",num(v.part/v.whole*100)]];}
+function fraction(v){ const g=gcd(v.num,v.den); return [["Simplified",`${v.num/g}/${v.den/g}`],["Decimal",num(v.num/v.den)]];}
+function ratio(v){ const g=gcd(v.a,v.b); return [["Simplified",`${v.a/g}:${v.b/g}`],["Scaled B",num(v.b/v.a*v.scale)]];}
+function parseNums(s){ return s.split(/[,\s]+/).map(Number).filter(Number.isFinite); }
+function average(v){ const a=parseNums(v.values).sort((x,y)=>x-y), sum=a.reduce((p,c)=>p+c,0); return [["Mean",num(sum/a.length)],["Median",num(a[Math.floor((a.length-1)/2)])],["Min",num(a[0])],["Max",num(a[a.length-1])],["Range",num(a[a.length-1]-a[0])]];}
+function gpa(v){ const rows=v.rows.trim().split(/\n+/).map(r=>r.split(",").map(Number)); const pts=rows.reduce((a,[g,c])=>a+g*c,0), cr=rows.reduce((a,[g,c])=>a+c,0); return [["GPA",num(pts/cr)],["Credits",num(cr)]];}
+function gradeNeeded(v){ return [["Final score needed",pct((v.target-v.current*(1-v.finalWeight/100))/(v.finalWeight/100))]];}
+function triangle(v){ const c=Math.hypot(v.a,v.b); return [["Hypotenuse",num(c)],["Area",num(v.a*v.b/2)],["Perimeter",num(v.a+v.b+c)]];}
+function circle(v){ return [["Diameter",num(2*v.radius)],["Circumference",num(2*Math.PI*v.radius)],["Area",num(Math.PI*v.radius*v.radius)]];}
+const pythagorean = triangle;
+function scientific(v){ return [["Scientific notation",Number(v.value).toExponential(6)]];}
+function quadratic(v){ const disc=v.b*v.b-4*v.a*v.c; if(disc<0)return [["Discriminant",num(disc)],["Roots","Complex roots"]]; return [["Discriminant",num(disc)],["Root 1",num((-v.b+Math.sqrt(disc))/(2*v.a))],["Root 2",num((-v.b-Math.sqrt(disc))/(2*v.a))]];}
+function prime(v){ const n=Math.floor(v.value), fac=[]; for(let i=1;i<=Math.sqrt(n);i++)if(n%i===0){fac.push(i); if(i!==n/i)fac.push(n/i)} return [["Prime",fac.length===2?"Yes":"No"],["Factors",fac.sort((a,b)=>a-b).join(", ")]];}
+
+function sentencesTool(v){ const ss=sentences(v.text), lens=ss.map(s=>words(s).length); return [["Sentences",num(ss.length)],["Average words",num(lens.reduce((a,b)=>a+b,0)/(lens.length||1))],["Longest sentence",num(Math.max(0,...lens))]];}
+function passive(v){ const m=v.text.match(/\b(am|is|are|was|were|be|been|being)\s+\w+ed\b/gi)||[]; return [["Possible passive patterns",num(m.length)],["Matches",m.join("\n")||"None"]];}
+function paragraphs(v){ const ps=v.text.split(/\n\s*\n/).filter(Boolean), counts=ps.map(p=>words(p).length); return [["Paragraphs",num(ps.length)],["Longest paragraph words",num(Math.max(0,...counts))],["Long paragraphs",num(counts.filter(c=>c>120).length)]];}
+function plainEnglish(v){ const ws=words(v.text); return [["Long words",ws.filter(w=>w.length>12).join(", ")||"None"],["Average word length",num(ws.join("").length/(ws.length||1))]];}
+function readTime(v){ const w=words(v.text).length; return [["Words",num(w)],["Reading time",`${Math.max(1,Math.ceil(w/v.wpm))} min`],["Speaking time",`${Math.max(1,Math.ceil(w/140))} min`]];}
+function keyword(v){ const ws=words(v.text), c=ws.filter(w=>w===v.keyword.toLowerCase()).length; return [["Count",num(c)],["Density",pct(c/ws.length*100)]];}
+function duplicateWords(v){ const m=v.text.match(/\b(\w+)\s+\1\b/gi)||[]; return [["Repeated adjacent words",m.join("\n")||"None"],["Count",num(m.length)]];}
+function syllables(v){ return [["Estimated syllables",num(words(v.text).reduce((a,w)=>a+syllablesIn(w),0))]];}
+function summaryLength(v){ return [["Characters",num(v.text.length)],["Target status",v.text.length<=v.target?"Fits":"Too long"],["Remaining",num(v.target-v.text.length)]];}
+function transitions(v){ const list=["first","however","therefore","because","also","finally","meanwhile","for example"]; const found=list.filter(w=>v.text.toLowerCase().includes(w)); return [["Transition words",found.join(", ")||"None"],["Count",num(found.length)]];}
+
+function password(v){ let chars="abcdefghijklmnopqrstuvwxyz"; if(v.upper==="yes")chars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ"; if(v.numbers==="yes")chars+="0123456789"; if(v.symbols==="yes")chars+="!@#$%^&*_-+="; const a=new Uint32Array(v.length); crypto.getRandomValues(a); return [["Password",[...a].map(x=>chars[x%chars.length]).join("")],["Length",num(v.length)]];}
+function passphrase(v){ const list="river mountain orange silver quiet lunar forest cotton marble window coffee garden paper signal north bright".split(" "); const a=new Uint32Array(v.words); crypto.getRandomValues(a); return [["Passphrase",[...a].map(x=>list[x%list.length]).join(v.separator)]];}
+async function sha256(v){ const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v.text)); return [["SHA-256",[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")]];}
+async function fileHash(v){ if(!v.file) return [["Action needed","Choose a file, then select Run tool."]]; const b=await crypto.subtle.digest("SHA-256",await v.file.arrayBuffer()); return [["File",v.file.name],["SHA-256",[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")]];}
+function randomNumber(v){ const range=v.max-v.min+1, a=new Uint32Array(v.count); crypto.getRandomValues(a); return [["Numbers",[...a].map(x=>v.min+(x%range)).join(", ")]];}
+function uuid(v){ return [["UUIDs",Array.from({length:Math.min(50,v.count)},()=>crypto.randomUUID()).join("\n")]];}
+function jwt(v){ const p=v.token.split("."); const dec=s=>JSON.stringify(JSON.parse(atob(s.replace(/-/g,"+").replace(/_/g,"/"))),null,2); try{return [["Header",dec(p[0])],["Payload",dec(p[1])],["Note","Signature is not verified."]]}catch{return [["Error","Invalid JWT format"]]}}
+function redact(v){ return [["Redacted",v.text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,"[email]").replace(/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g,"[phone]").replace(/\b[a-z]{2,}_[A-Za-z0-9]{12,}\b/g,"[token]").replace(/\b[A-Za-z0-9_-]{24,}\b/g,"[secret]")]];}
+function entropy(v){ const p=v.password; let set=0; if(/[a-z]/.test(p))set+=26;if(/[A-Z]/.test(p))set+=26;if(/\d/.test(p))set+=10;if(/[^A-Za-z0-9]/.test(p))set+=32; return [["Estimated entropy",`${num(Math.log2(Math.pow(set||1,p.length)))} bits`],["Length",num(p.length)]];}
+function checksum(v){ const sum=[...v.text].reduce((a,c)=>a+c.charCodeAt(0),0); return [["Additive checksum",String(sum)],["Hex",sum.toString(16)]];}
+function urlSafety(v){ try{const u=new URL(v.url); return [["Protocol",u.protocol],["Host",u.hostname],["HTTPS",u.protocol==="https:"?"Yes":"No"],["Suspicious length",v.url.length>120?"Review":"Normal"]]}catch{return [["Error","Invalid URL"]]}}
+function base64(v){ try{return [["Encoded",btoa(unescape(encodeURIComponent(v.text)))],["Decoded",decodeURIComponent(escape(atob(v.text)))] ]}catch{return [["Encoded",btoa(unescape(encodeURIComponent(v.text)))],["Decoded","Input is not valid Base64"]]}}
+
+const calc = {unit,temperature,fuel,dateDiff,dateAdd,businessDays,age,countdown,weekInfo,tzConvert,unixTime,isoParse,quarter,leap,workingHours,hexColor,rgbColor,hslColor,contrast,palette,gradient,shadow,radius,opacity,clamp,blend,filter,altText,headingCheck,linkText,formLabels,tapTarget,readability,ariaHelper,focusChecklist,colorMeaning,imageA11y,keyboardChecklist,qrPayload,wifiPayload,vcardPayload,mailto,sms,tel,geo,ics,upc,ean,isbn13,qrLength,subject,preheader,emailPreview,mailtoFull,htmlPlain,htmlMin,unsubscribe,utm,spamWords,ctaCounter,lineLength,emailSize,sku,listingTitle,dimWeight,reorder,stockCover,returnRate,discountMargin,bundle,aov,roas,shipUnit,tags,percentage,fraction,ratio,average,gpa,gradeNeeded,triangle,circle,pythagorean,scientific,quadratic,prime,sentencesTool,passive,paragraphs,plainEnglish,readTime,keyword,duplicateWords,syllables,summaryLength,transitions,password,passphrase,sha256,fileHash,randomNumber,uuid,jwt,redact,entropy,checksum,urlSafety,base64};
+
+async function run() {
+  const slug = document.body.dataset.tool;
+  if (!slug) return;
+  const tool = TOOLS[slug];
+  $("calculatorForm").innerHTML = tool.fields.map(field).join("");
+  const execute = async () => {
+    try { show(await calc[tool.kind](read(tool.fields))); }
+    catch(e) { show([["Action needed", e.message]]); }
+  };
+  $("runTool").addEventListener("click", execute);
+  $("copyResults").addEventListener("click", copyResults);
+  if (!tool.manual) $("calculatorForm").querySelectorAll("input,textarea,select").forEach(el => { el.addEventListener("input", execute); el.addEventListener("change", execute); });
+  if (tool.manual) show([["Ready","Enter values, choose any required file, then select Run tool."]]); else execute();
+}
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-year]").forEach(n=>n.textContent=new Date().getFullYear()); run();});
