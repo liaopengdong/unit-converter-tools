@@ -2,4 +2,4 @@
 
 Fast unit converters for everyday metric, US customary, cooking, data, science, and web measurements.
 
-Static GitHub Pages-ready site with 12 tools, guides, legal pages, sitemap, and robots.txt.
+Static GitHub Pages-ready site with 20 tools, guides, legal pages, sitemap, and robots.txt.
