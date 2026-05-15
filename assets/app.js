@@ -6,6 +6,7 @@ const money = (v) => Number.isFinite(v) ? new Intl.NumberFormat("en-US", {style:
 const num = (v) => Number.isFinite(v) ? nf.format(v) : "n/a";
 const pct = (v) => Number.isFinite(v) ? `${v.toFixed(2)}%` : "n/a";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const setStatus = (msg) => { const el = $("toolStatus"); if (el) el.textContent = msg; };
 const read = (fields) => {
   const out = {};
   fields.forEach(f => {
@@ -18,13 +19,36 @@ const read = (fields) => {
   return out;
 };
 const field = (f) => {
-  if (f.type === "textarea") return `<div class="field wide"><label for="${f.id}">${f.label}</label><textarea id="${f.id}">${esc(f.value || "")}</textarea></div>`;
-  if (f.type === "select") return `<div class="field"><label for="${f.id}">${f.label}</label><select id="${f.id}">${f.options.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join("")}</select></div>`;
-  if (f.type === "file") return `<div class="field wide"><label for="${f.id}">${f.label}</label><input id="${f.id}" type="file" accept="${esc(f.accept || "")}"></div>`;
-  return `<div class="field"><label for="${f.id}">${f.label}</label><input id="${f.id}" type="${f.type || "number"}" step="any" value="${esc(f.value ?? "")}"></div>`;
+  const hint = `<small>Enter ${esc(f.label).toLowerCase()}${f.type === "file" ? " from your device" : " and run the tool"}.</small>`;
+  if (f.type === "textarea") return `<div class="field wide"><label for="${f.id}">${esc(f.label)}</label><textarea id="${f.id}" autocomplete="off">${esc(f.value || "")}</textarea>${hint}</div>`;
+  if (f.type === "select") return `<div class="field"><label for="${f.id}">${esc(f.label)}</label><select id="${f.id}">${f.options.map(o=>`<option value="${esc(o[0])}" ${String(f.value ?? "")===String(o[0])?"selected":""}>${esc(o[1])}</option>`).join("")}</select>${hint}</div>`;
+  if (f.type === "file") return `<div class="field wide"><label for="${f.id}">${esc(f.label)}</label><input id="${f.id}" type="file" accept="${esc(f.accept || "")}">${hint}</div>`;
+  return `<div class="field"><label for="${f.id}">${esc(f.label)}</label><input id="${f.id}" type="${f.type || "number"}" step="any" value="${esc(f.value ?? "")}" autocomplete="off">${hint}</div>`;
 };
-const show = (rows) => { $("results").innerHTML = rows.map(([k,v]) => `<div class="result-card"><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join(""); };
-const copyResults = () => navigator.clipboard?.writeText($("results").innerText);
+const decorate = (v) => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(String(v).trim()) ? `<i class="swatch" style="background:${esc(v)}"></i>` : "";
+const show = (rows) => {
+  const safeRows = rows && rows.length ? rows : [["No result", "Check the inputs and run the tool again."]];
+  $("results").innerHTML = safeRows.map(([k,v]) => `<div class="result-card" data-copy="${esc(v)}"><span>${esc(k)}</span><strong>${decorate(v)}${esc(v)}</strong><button type="button" class="mini-copy" aria-label="Copy ${esc(k)}">Copy</button></div>`).join("");
+  setStatus(`${safeRows.length} result item${safeRows.length === 1 ? "" : "s"} ready.`);
+};
+const copyText = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("Copied to clipboard.");
+  } catch {
+    setStatus("Copy is blocked by this browser. Select the result text manually.");
+  }
+};
+const copyResults = () => copyText($("results").innerText.replace(/\nCopy\b/g, "").trim());
+const resetFields = (tool, execute) => {
+  tool.fields.forEach(f => {
+    const el = $(f.id);
+    if (!el || f.type === "file") return;
+    el.value = f.type === "select" ? String(f.value || f.options?.[0]?.[0] || "") : String(f.value ?? "");
+  });
+  execute();
+  setStatus("Default example restored.");
+};
 
 const factors = {
   m:1, km:1000, cm:.01, mm:.001, in:.0254, ft:.3048, yd:.9144, mi:1609.344,
@@ -48,7 +72,7 @@ function dateAdd(v){ const x=d(v.start); const n=v.direction==="subtract"?-v.amo
 function businessDays(v){ let a=d(v.start), b=d(v.end), c=0; if(v.includeEnd==="yes") b.setDate(b.getDate()+1); for(let x=new Date(a); x<b; x.setDate(x.getDate()+1)){ const day=x.getDay(); if(day!==0&&day!==6)c++; } return [["Business days",num(c)],["Calendar days",num(days(v.start,v.end))]]; }
 function age(v){ const a=d(v.birth), b=d(v.asof); let y=b.getFullYear()-a.getFullYear(); const before=b.getMonth()<a.getMonth()||(b.getMonth()===a.getMonth()&&b.getDate()<a.getDate()); if(before)y--; return [["Age years",num(y)],["Total days",num(days(v.birth,v.asof))]]; }
 function countdown(v){ const ms=d(v.target)-new Date(); return [["Days remaining",num(Math.floor(ms/86400000))],["Hours remaining",num(Math.floor(ms/3600000))],["Target",d(v.target).toString()]]; }
-function weekInfo(v){ const x=d(v.date); const start=new Date(x.getFullYear(),0,0); const doy=Math.floor((x-start)/86400000); return [["Day of year",num(doy)],["Quarter",`Q${Math.floor(x.getMonth()/3)+1}`],["Weekday",x.toLocaleDateString("en-US",{weekday:"long"})]]; }
+function weekInfo(v){ const x=d(v.date); const start=new Date(x.getFullYear(),0,0); const doy=Math.floor((x-start)/86400000); const y=new Date(Date.UTC(x.getFullYear(),x.getMonth(),x.getDate())); y.setUTCDate(y.getUTCDate()+4-(y.getUTCDay()||7)); const yearStart=new Date(Date.UTC(y.getUTCFullYear(),0,1)); const week=Math.ceil((((y-yearStart)/86400000)+1)/7); return [["ISO week",num(week)],["Day of year",num(doy)],["Quarter",`Q${Math.floor(x.getMonth()/3)+1}`],["Weekday",x.toLocaleDateString("en-US",{weekday:"long"})]]; }
 function tzConvert(v){ const t=d(v.time); const out=new Date(t.getTime()+(v.to-v.from)*3600000); return [["Converted time",out.toString()],["ISO",out.toISOString()]]; }
 function unixTime(v){ const ms=v.mode==="seconds"?v.value*1000:v.value; const x=new Date(ms); return [["Local",x.toString()],["ISO",x.toISOString()],["Unix seconds",String(Math.floor(ms/1000))]]; }
 function isoParse(v){ const x=d(v.value); return [["Local",x.toString()],["UTC",x.toUTCString()],["Unix seconds",String(Math.floor(x.getTime()/1000))]]; }
@@ -136,7 +160,7 @@ function percentage(v){ return [["Percent",pct(v.part/v.whole*100)],["Part of 10
 function fraction(v){ const g=gcd(v.num,v.den); return [["Simplified",`${v.num/g}/${v.den/g}`],["Decimal",num(v.num/v.den)]];}
 function ratio(v){ const g=gcd(v.a,v.b); return [["Simplified",`${v.a/g}:${v.b/g}`],["Scaled B",num(v.b/v.a*v.scale)]];}
 function parseNums(s){ return s.split(/[,\s]+/).map(Number).filter(Number.isFinite); }
-function average(v){ const a=parseNums(v.values).sort((x,y)=>x-y), sum=a.reduce((p,c)=>p+c,0); return [["Mean",num(sum/a.length)],["Median",num(a[Math.floor((a.length-1)/2)])],["Min",num(a[0])],["Max",num(a[a.length-1])],["Range",num(a[a.length-1]-a[0])]];}
+function average(v){ const a=parseNums(v.values).sort((x,y)=>x-y), sum=a.reduce((p,c)=>p+c,0); const mid=Math.floor(a.length/2); const med=a.length%2?a[mid]:(a[mid-1]+a[mid])/2; return [["Mean",num(sum/a.length)],["Median",num(med)],["Min",num(a[0])],["Max",num(a[a.length-1])],["Range",num(a[a.length-1]-a[0])]];}
 function gpa(v){ const rows=v.rows.trim().split(/\n+/).map(r=>r.split(",").map(Number)); const pts=rows.reduce((a,[g,c])=>a+g*c,0), cr=rows.reduce((a,[g,c])=>a+c,0); return [["GPA",num(pts/cr)],["Credits",num(cr)]];}
 function gradeNeeded(v){ return [["Final score needed",pct((v.target-v.current*(1-v.finalWeight/100))/(v.finalWeight/100))]];}
 function triangle(v){ const c=Math.hypot(v.a,v.b); return [["Hypotenuse",num(c)],["Area",num(v.a*v.b/2)],["Perimeter",num(v.a+v.b+c)]];}
@@ -161,14 +185,14 @@ function password(v){ let chars="abcdefghijklmnopqrstuvwxyz"; if(v.upper==="yes"
 function passphrase(v){ const list="river mountain orange silver quiet lunar forest cotton marble window coffee garden paper signal north bright".split(" "); const a=new Uint32Array(v.words); crypto.getRandomValues(a); return [["Passphrase",[...a].map(x=>list[x%list.length]).join(v.separator)]];}
 async function sha256(v){ const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v.text)); return [["SHA-256",[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")]];}
 async function fileHash(v){ if(!v.file) return [["Action needed","Choose a file, then select Run tool."]]; const b=await crypto.subtle.digest("SHA-256",await v.file.arrayBuffer()); return [["File",v.file.name],["SHA-256",[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")]];}
-function randomNumber(v){ const range=v.max-v.min+1, a=new Uint32Array(v.count); crypto.getRandomValues(a); return [["Numbers",[...a].map(x=>v.min+(x%range)).join(", ")]];}
+function randomNumber(v){ const min=Math.min(v.min,v.max), max=Math.max(v.min,v.max), range=max-min+1, count=Math.max(1,Math.min(100,Math.floor(v.count))); const a=new Uint32Array(count); crypto.getRandomValues(a); return [["Numbers",[...a].map(x=>min+(x%range)).join(", ")],["Range",`${min} to ${max}`]];}
 function uuid(v){ return [["UUIDs",Array.from({length:Math.min(50,v.count)},()=>crypto.randomUUID()).join("\n")]];}
-function jwt(v){ const p=v.token.split("."); const dec=s=>JSON.stringify(JSON.parse(atob(s.replace(/-/g,"+").replace(/_/g,"/"))),null,2); try{return [["Header",dec(p[0])],["Payload",dec(p[1])],["Note","Signature is not verified."]]}catch{return [["Error","Invalid JWT format"]]}}
+function jwt(v){ const p=v.token.split("."); const pad=s=>s+"=".repeat((4-s.length%4)%4); const dec=s=>JSON.stringify(JSON.parse(atob(pad(s.replace(/-/g,"+").replace(/_/g,"/")))),null,2); try{return [["Header",dec(p[0])],["Payload",dec(p[1])],["Note","Signature is decoded locally and not verified."]]}catch{return [["Error","Invalid JWT format"]]}}
 function redact(v){ return [["Redacted",v.text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,"[email]").replace(/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g,"[phone]").replace(/\b[a-z]{2,}_[A-Za-z0-9]{12,}\b/g,"[token]").replace(/\b[A-Za-z0-9_-]{24,}\b/g,"[secret]")]];}
 function entropy(v){ const p=v.password; let set=0; if(/[a-z]/.test(p))set+=26;if(/[A-Z]/.test(p))set+=26;if(/\d/.test(p))set+=10;if(/[^A-Za-z0-9]/.test(p))set+=32; return [["Estimated entropy",`${num(Math.log2(Math.pow(set||1,p.length)))} bits`],["Length",num(p.length)]];}
 function checksum(v){ const sum=[...v.text].reduce((a,c)=>a+c.charCodeAt(0),0); return [["Additive checksum",String(sum)],["Hex",sum.toString(16)]];}
 function urlSafety(v){ try{const u=new URL(v.url); return [["Protocol",u.protocol],["Host",u.hostname],["HTTPS",u.protocol==="https:"?"Yes":"No"],["Suspicious length",v.url.length>120?"Review":"Normal"]]}catch{return [["Error","Invalid URL"]]}}
-function base64(v){ try{return [["Encoded",btoa(unescape(encodeURIComponent(v.text)))],["Decoded",decodeURIComponent(escape(atob(v.text)))] ]}catch{return [["Encoded",btoa(unescape(encodeURIComponent(v.text)))],["Decoded","Input is not valid Base64"]]}}
+function base64(v){ const enc=btoa(unescape(encodeURIComponent(v.text))); try{return [["Encoded",enc],["Decoded",decodeURIComponent(escape(atob(v.text)))],["Input length",num(v.text.length)]]}catch{return [["Encoded",enc],["Decoded","Input is not valid Base64"],["Input length",num(v.text.length)]]}}
 
 const calc = {unit,temperature,fuel,dateDiff,dateAdd,businessDays,age,countdown,weekInfo,tzConvert,unixTime,isoParse,quarter,leap,workingHours,hexColor,rgbColor,hslColor,contrast,palette,gradient,shadow,radius,opacity,clamp,blend,filter,altText,headingCheck,linkText,formLabels,tapTarget,readability,ariaHelper,focusChecklist,colorMeaning,imageA11y,keyboardChecklist,qrPayload,wifiPayload,vcardPayload,mailto,sms,tel,geo,ics,upc,ean,isbn13,qrLength,subject,preheader,emailPreview,mailtoFull,htmlPlain,htmlMin,unsubscribe,utm,spamWords,ctaCounter,lineLength,emailSize,sku,listingTitle,dimWeight,reorder,stockCover,returnRate,discountMargin,bundle,aov,roas,shipUnit,tags,percentage,fraction,ratio,average,gpa,gradeNeeded,triangle,circle,pythagorean,scientific,quadratic,prime,sentencesTool,passive,paragraphs,plainEnglish,readTime,keyword,duplicateWords,syllables,summaryLength,transitions,password,passphrase,sha256,fileHash,randomNumber,uuid,jwt,redact,entropy,checksum,urlSafety,base64};
 
@@ -183,6 +207,11 @@ async function run() {
   };
   $("runTool").addEventListener("click", execute);
   $("copyResults").addEventListener("click", copyResults);
+  $("resetTool")?.addEventListener("click", () => resetFields(tool, execute));
+  $("results").addEventListener("click", (e) => {
+    const btn = e.target.closest(".mini-copy");
+    if (btn) copyText(btn.closest(".result-card")?.dataset.copy || "");
+  });
   if (!tool.manual) $("calculatorForm").querySelectorAll("input,textarea,select").forEach(el => { el.addEventListener("input", execute); el.addEventListener("change", execute); });
   if (tool.manual) show([["Ready","Enter values, choose any required file, then select Run tool."]]); else execute();
 }
